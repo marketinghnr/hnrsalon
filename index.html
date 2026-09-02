@@ -1,335 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Roll the Dice | Harsha & Rakesh</title>
-
-<style>
-
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-body {
-    font-family: Arial, Helvetica, sans-serif;
-    background: #111;
-    color: white;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.container {
-    width: 100%;
-    max-width: 500px;
-    min-height: 100vh;
-    padding: 35px 22px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-
-    background:
-        radial-gradient(circle at top, #403522 0%, #181818 38%, #090909 80%);
-}
-
-.logo {
-    font-size: 25px;
-    font-weight: bold;
-    letter-spacing: 2px;
-    margin-bottom: 8px;
-}
-
-.logo span {
-    color: #d5ad63;
-}
-
-.subtitle {
-    color: #bbb;
-    font-size: 12px;
-    letter-spacing: 2px;
-    margin-bottom: 30px;
-}
-
-h1 {
-    font-size: 34px;
-    line-height: 1.1;
-    margin-bottom: 15px;
-}
-
-.highlight {
-    color: #d5ad63;
-}
-
-.description {
-    color: #ccc;
-    font-size: 15px;
-    line-height: 1.5;
-    max-width: 370px;
-    margin-bottom: 30px;
-}
-
-.dice-area {
-    margin: 10px 0 28px;
-}
-
-.dice {
-    width: 125px;
-    height: 125px;
-
-    background: linear-gradient(145deg, #fff, #d8d8d8);
-
-    border-radius: 22px;
-
-    display: grid;
-
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(3, 1fr);
-
-    padding: 18px;
-
-    box-shadow:
-        0 15px 35px rgba(0,0,0,.5),
-        inset 0 2px 4px rgba(255,255,255,.9);
-
-    transition: transform .15s ease;
-}
-
-.dice.rolling {
-    animation: roll .7s infinite linear;
-}
-
-@keyframes roll {
-
-    0% {
-        transform: rotate(0deg) scale(1);
-    }
-
-    25% {
-        transform: rotate(90deg) scale(1.08);
-    }
-
-    50% {
-        transform: rotate(180deg) scale(1);
-    }
-
-    75% {
-        transform: rotate(270deg) scale(1.08);
-    }
-
-    100% {
-        transform: rotate(360deg) scale(1);
-    }
-
-}
-
-.dot {
-    width: 18px;
-    height: 18px;
-
-    background: #171717;
-
-    border-radius: 50%;
-
-    align-self: center;
-    justify-self: center;
-}
-
-.roll-button {
-
-    border: none;
-
-    cursor: pointer;
-
-    padding: 16px 40px;
-
-    border-radius: 50px;
-
-    background: linear-gradient(135deg, #e3c078, #b88a3f);
-
-    color: #111;
-
-    font-size: 16px;
-
-    font-weight: bold;
-
-    letter-spacing: .5px;
-
-    box-shadow:
-        0 8px 25px rgba(210,170,90,.25);
-
-    transition: .2s;
-}
-
-.roll-button:hover {
-    transform: translateY(-2px);
-}
-
-.roll-button:disabled {
-    opacity: .5;
-    cursor: not-allowed;
-}
-
-.result {
-
-    display: none;
-
-    margin-top: 30px;
-
-    width: 100%;
-
-    max-width: 390px;
-
-    padding: 25px 20px;
-
-    border: 1px solid #806535;
-
-    border-radius: 18px;
-
-    background: rgba(255,255,255,.06);
-}
-
-.result.show {
-    display: block;
-
-    animation: appear .5s ease;
-}
-
-@keyframes appear {
-
-    from {
-        opacity: 0;
-        transform: translateY(15px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-
-}
-
-.result-title {
-
-    color: #d5ad63;
-
-    font-size: 13px;
-
-    letter-spacing: 2px;
-
-    margin-bottom: 10px;
-}
-
-.prize {
-
-    font-size: 26px;
-
-    font-weight: bold;
-
-    margin-bottom: 10px;
-}
-
-.result-text {
-
-    color: #ccc;
-
-    font-size: 13px;
-
-    line-height: 1.5;
-}
-
-.note {
-
-    margin-top: 25px;
-
-    color: #888;
-
-    font-size: 11px;
-
-    line-height: 1.5;
-
-    max-width: 350px;
-}
-
-</style>
-
-</head>
-
-<body>
-
-<div class="container">
-
-    <div class="logo">
-        HARSHA <span>&</span> RAKESH
-    </div>
-
-    <div class="subtitle">
-        PREMIUM SALON
-    </div>
-
-    <h1>
-        ROLL THE <span class="highlight">DICE</span> 🎲
-    </h1>
-
-    <p class="description">
-        Spend ₹5,000 or more and get a chance to roll the dice
-        and win a complimentary salon service.
-    </p>
-
-    <div class="dice-area">
-
-        <div class="dice" id="dice"></div>
-
-    </div>
-
-    <button
-        class="roll-button"
-        id="rollButton"
-        onclick="rollDice()">
-
-        🎲 ROLL THE DICE
-
-    </button>
-
-    <div class="result" id="result">
-
-        <div class="result-title">
-            CONGRATULATIONS!
-        </div>
-
-        <div class="prize" id="prize"></div>
-
-        <div class="result-text">
-            You have won a complimentary service at
-            Harsha & Rakesh Salon.
-        </div>
-
-    </div>
-
-    <div class="note">
-
-        *Applicable on a minimum bill value of ₹5,000.
-        Service can be redeemed as per salon terms & conditions.
-
-    </div>
-
-</div>
-
-
 <script>
 
 const dice = document.getElementById("dice");
-
 const result = document.getElementById("result");
-
 const prize = document.getElementById("prize");
-
 const button = document.getElementById("rollButton");
 
 
@@ -350,46 +23,17 @@ const prizes = {
 };
 
 
-function drawDice(number) {
+function drawDice(service) {
 
     dice.innerHTML = "";
 
-    const positions = {
+    const serviceText = document.createElement("div");
 
-        1: [5],
+    serviceText.className = "dice-service";
 
-        2: [1,9],
+    serviceText.textContent = service;
 
-        3: [1,5,9],
-
-        4: [1,3,7,9],
-
-        5: [1,3,5,7,9],
-
-        6: [1,3,4,6,7,9]
-
-    };
-
-
-    for(let i = 1; i <= 9; i++) {
-
-        const cell = document.createElement("div");
-
-
-        if(positions[number].includes(i)) {
-
-            const dot = document.createElement("div");
-
-            dot.className = "dot";
-
-            cell.appendChild(dot);
-
-        }
-
-
-        dice.appendChild(cell);
-
-    }
+    dice.appendChild(serviceText);
 
 }
 
@@ -411,14 +55,12 @@ function rollDice() {
         const randomNumber =
             Math.floor(Math.random() * 6) + 1;
 
-
-        drawDice(randomNumber);
-
+        drawDice(prizes[randomNumber]);
 
         counter++;
 
 
-        if(counter >= 10) {
+        if (counter >= 10) {
 
             clearInterval(animation);
 
@@ -427,14 +69,18 @@ function rollDice() {
                 Math.floor(Math.random() * 6) + 1;
 
 
-            drawDice(finalNumber);
+            const winningService =
+                prizes[finalNumber];
+
+
+            drawDice(winningService);
 
 
             dice.classList.remove("rolling");
 
 
             prize.textContent =
-                prizes[finalNumber];
+                winningService;
 
 
             result.classList.add("show");
@@ -444,14 +90,11 @@ function rollDice() {
 
         }
 
-    }, 100);
+    }, 120);
 
 }
 
 
-drawDice(1);
+drawDice("ROLL!");
 
 </script>
-
-</body>
-</html>
