@@ -1,0 +1,82 @@
+<script>
+
+const dice = document.getElementById("dice");
+const result = document.getElementById("result");
+const prize = document.getElementById("prize");
+const button = document.getElementById("rollButton");
+
+const prizes = {
+    1: "Gel Polish",
+    2: "Manicure",
+    3: "Foot Massage",
+    4: "Face Massage",
+    5: "Gel Polish",
+    6: "Wash & Blast Dry"
+};
+
+function drawDice(number) {
+
+    dice.innerHTML = "";
+
+    const positions = {
+        1: [5],
+        2: [1,9],
+        3: [1,5,9],
+        4: [1,3,7,9],
+        5: [1,3,5,7,9],
+        6: [1,3,4,6,7,9]
+    };
+
+    for(let i = 1; i <= 9; i++) {
+
+        const cell = document.createElement("div");
+
+        if(positions[number].includes(i)) {
+            const dot = document.createElement("div");
+            dot.className = "dot";
+            cell.appendChild(dot);
+        }
+
+        dice.appendChild(cell);
+    }
+}
+
+function rollDice() {
+
+    button.disabled = true;
+    result.classList.remove("show");
+    dice.classList.add("rolling");
+
+    let counter = 0;
+
+    const animation = setInterval(() => {
+
+        const randomNumber = Math.floor(Math.random() * 6) + 1;
+        drawDice(randomNumber);
+
+        counter++;
+
+        if(counter >= 10) {
+
+            clearInterval(animation);
+
+            const finalNumber =
+                Math.floor(Math.random() * 6) + 1;
+
+            drawDice(finalNumber);
+
+            dice.classList.remove("rolling");
+
+            prize.textContent = prizes[finalNumber];
+
+            result.classList.add("show");
+
+            button.disabled = false;
+        }
+
+    }, 100);
+}
+
+drawDice(1);
+
+</script>
